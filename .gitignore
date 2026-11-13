@@ -1,0 +1,19 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Segredos/configuração local
+.env
+.env.*
+!.env.example
+secrets.h
+luzviva_secrets.h
+
+# Compilação e ferramentas
+build/
+.pio/
+*.elf
+*.bin
+*.map
+*.o
+*.d
