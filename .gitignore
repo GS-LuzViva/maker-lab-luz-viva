@@ -17,3 +17,6 @@ build/
 *.map
 *.o
 *.d
+
+# Vídeos de edição, não versionar
+/video/*.mp4
