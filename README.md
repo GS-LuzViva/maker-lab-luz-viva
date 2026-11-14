@@ -4,6 +4,10 @@ O LuzViva é um protótipo MakerLab para identificar pontos de iluminação púb
 
 > **Estado atual:** este repositório contém o firmware do carrinho e os CSVs de coleta. O firmware lê o LDR, executa o classificador TinyML embarcado e mostra classe e confiança no painel Wi-Fi do ESP32. O controle manual funciona; o modo automático usa o HC-SR04 para avançar e desviar de obstáculos. O resultado do LDR ainda não altera o movimento do robô e o firmware ainda não envia medições para a API do app. Consulte [o estado de integração](docs/arquitetura.md).
 
+## Link do vídeo
+
+https://www.youtube.com/watch?v=IoHceU1G-Fc
+
 ## Ficha técnica do MVP
 
 - **Produto:** LuzViva (nome provisório).
@@ -60,16 +64,6 @@ As credenciais do ponto de acesso estão definidas no sketch para a demonstraç�
 - [Hardware e ligações](docs/hardware.md)
 - [Dados, classes e limitações do modelo](docs/dados-e-modelo.md)
 - [Checklist e roteiro da entrega MakerLab](docs/entrega-makerlab.md)
-
-## Pendências para uma entrega reproduzível
-
-- Adicionar ao repositório a biblioteca/modelo Edge Impulse exportado, ou documentar um procedimento público e reproduzível para obtê-lo.
-- Confirmar e registrar placa ESP32, versão do Arduino IDE/core e versão da biblioteca TinyML usada.
-- Documentar a calibração de ADC para lux; o firmware atual exibe ADC/mV e não calcula lux.
-- Integrar e validar o envio de medições ao endpoint `/api/medicoes` do app.
-- Definir a resposta autônoma do robô para cada classe do LDR e demonstrar essa resposta com segurança.
-- Corrigir os dois CSVs do HC-SR04 com marcadores de conflito antes de qualquer uso em treinamento.
-- Registrar evidências de testes em diferentes iluminações e situações de falha, sem declarar como concluído o que ainda não foi executado.
 
 ## Entrega MakerLab
 
