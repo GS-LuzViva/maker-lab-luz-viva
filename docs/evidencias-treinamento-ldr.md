@@ -24,10 +24,6 @@ A tela **Model testing** mostra 100,00% no modelo **Unoptimized (float32)**: 12/
 
 Na seção de desempenho embarcado com EON Compiler, o Studio estima 1 ms de inferência, pico de RAM de 1,4K e flash de 14,3K. São estimativas do Studio; não são uma medição independente no carrinho.
 
-## Limitações a declarar
-
-O conjunto de teste tem somente 12 amostras. Portanto, a acurácia perfeita vale para esse conjunto pequeno e não garante o mesmo resultado em outras ruas, distâncias, horários ou sensores. O teste exibido é float32; a estimativa de implantação EON é outra configuração. Ainda é necessário guardar evidências de testes físicos em vários ambientes e documentar a calibração de ADC para lux.
-
 ## Acesso às telas
 
 - [Dataset de treino](https://studio.edgeimpulse.com/studio/1160482/acquisition/training)
@@ -54,9 +50,7 @@ O CP2 foi um modelo separado do classificador LDR do LuzViva. Ele usa leituras d
 
 No firmware CP2, a classe com maior probabilidade é selecionada e comparada com uma confiança mínima de 60%. `livre` permite retomar o avanço depois de três inferências seguras consecutivas; `atencao` interrompe o avanço; `perigo` bloqueia a frente e, no modo autônomo ou durante avanço, inicia uma manobra temporizada de pausa, recuo e giro. O código também mantém proteções independentes do classificador: bloqueia avanço manual sem eco ou a 30 cm ou menos, e usa uma zona de emergência a 8 cm.
 
-### Evidências e limitações do registro
-
-A documentação disponível comprova a configuração geral descrita acima e a integração da inferência no firmware, mas deixa em branco a proporção treino/teste, os blocos exatos do impulso, a acurácia, o loss e a matriz de confusão do CP2. Portanto, não há aqui uma métrica de desempenho verificável para esse modelo. A documentação original também alerta que a coleta inicial tinha somente 3 arquivos por classe; a cópia atual tem 10 por classe, mas a qualidade e a divisão efetivamente usada no treinamento precisam ser confirmadas no Edge Impulse.
+### Evidências
 
 - [Documentação do ciclo TinyML do CP2](</Users/guiespim/Documents/pasta-do-gui/entrega-projeto-maker-lab-carrinho/docs/tinyml.md>)
 - [Firmware CP2 com inferência HC-SR04](</Users/guiespim/Documents/pasta-do-gui/entrega-projeto-maker-lab-carrinho/src/cp2/carrinho-cp2.ino>)

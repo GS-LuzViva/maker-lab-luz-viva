@@ -23,11 +23,3 @@ Em `dados/hc_sr04/` há 30 CSVs separados em `livre`, `atencao` e `perigo`, com 
 O sketch inclui `LuzViva_inferencing.h`, mantém uma janela do tamanho definido por `EI_CLASSIFIER_RAW_SAMPLE_COUNT` e executa `run_classifier`. A classe com maior pontuação e sua confiança são exibidas no painel. A interface apresenta `apagada`, `insuficiente` e `ok`; ela sinaliza confiança abaixo de 60% como baixa.
 
 A biblioteca gerada pelo Edge Impulse não está presente na pasta do projeto; portanto, a compilação depende de instalá-la separadamente no Arduino IDE. Este repositório ainda não contém métricas de validação do modelo, matriz de confusão ou evidências reproduzíveis de desempenho. Não atribua acurácia sem registrar a avaliação real.
-
-## Limitações e próximos registros
-
-- ADC/mV não equivale a lux: documentar calibração comparando com luxímetro em múltiplas condições.
-- Registrar como cada CSV foi coletado, distância/orientação do sensor, fonte de luz e variação entre ambientes.
-- Separar dados por sessão/ambiente na validação para reduzir risco de o modelo memorizar uma única configuração.
-- Guardar no README/relatório a configuração do Edge Impulse, janela, taxa de amostragem, divisão treino/validação/teste e métricas obtidas.
-- Distinguir leitura diurna de noturna e aplicar o horário de operação definido no contrato da equipe, se confirmado pelo app/pipeline.
