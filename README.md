@@ -2,7 +2,7 @@
 
 O LuzViva é um protótipo MakerLab para identificar pontos de iluminação pública que podem precisar de manutenção. A proposta é apoiar quem circula à noite, encontrando falhas antes de depender apenas de reclamações.
 
-> **Estado atual:** este repositório contém o firmware do carrinho e os CSVs de coleta. O firmware lê o LDR, executa o classificador TinyML embarcado e mostra classe e confiança no painel Wi-Fi do ESP32. O controle manual funciona; o modo automático usa o HC-SR04 para avançar e desviar de obstáculos. O resultado do LDR ainda não altera o movimento do robô e o firmware ainda não envia medições para a API do app. Consulte [o estado de integração](docs/arquitetura.md).
+> **Protótipo:** o TinyML classifica a leitura do LDR e o painel local mostra classe e confiança. O painel de controle do ESP32 fica em `http://192.168.4.1`.
 
 ## Link do vídeo
 
@@ -12,13 +12,11 @@ https://www.youtube.com/watch?v=IoHceU1G-Fc
 
 - **Produto:** LuzViva (nome provisório).
 - **Cidadãos e território:** pessoas que circulam à noite pelas áreas-piloto Sé, Pinheiros e Campo Limpo, em São Paulo.
-- **Problema:** a cidade não tem uma indicação aberta e atualizada de quais luminárias estão apagadas; a falha pode permanecer até alguém reportá-la.
-- **Proposta de valor:** detectar e priorizar falhas de iluminação com evidências de sensores e relatos, apoiando a manutenção.
+- **Problema:** cadastros de luminárias, telegestão e chamados não equivalem, por si só, a uma medição da luz ao longo do percurso de pedestres. O projeto investiga como dados de campo podem complementar os sistemas existentes.
+- **Proposta de valor:** medir e classificar a luminosidade em uma rota demonstrativa e organizar evidências para apoiar a vistoria e a priorização de manutenção.
 - **Componente MakerLab:** carrinho com ESP32, LDR e classificador TinyML; HC-SR04 para proteção e evasão de obstáculos.
-- **Integração pretendida:** enviar medições do robô ao app LuzViva por `POST /api/medicoes`, conforme o contrato acordado pela equipe. Essa integração ainda precisa ser implementada e demonstrada.
 - **Fontes do MVP:** cadastro de iluminação GeoSampa/ILUME, SP156, Open-Meteo e dados coletados pelo robô e pelo app, conforme as entregas das demais disciplinas.
 - **ODS relacionados:** 11 (Cidades e comunidades sustentáveis), 9 (Indústria, inovação e infraestrutura) e 10 (Redução das desigualdades).
-- **URL pública do MVP:** a preencher quando publicada.
 
 ## Equipe
 
@@ -38,11 +36,18 @@ https://www.youtube.com/watch?v=IoHceU1G-Fc
 ├── docs/
 │   ├── arquitetura.md
 │   ├── dados-e-modelo.md
-│   ├── entrega-makerlab.md
 │   └── hardware.md
+├── evidencias/
+│   ├── treinamento_ldr.json
+│   ├── ldr/
+│   └── hc_sr04/
 ├── firmware/
 │   └── LuzViva_Carrinho/
 │       └── LuzViva_Carrinho.ino
+├── model/biblioteca-edge-impulse/
+│   ├── README.md
+│   ├── ei-luzviva-arduino-1.0.2-impulse-#1.zip
+│   └── ei-guiespim18-project-1-arduino-1.0.3-impulse-#1.zip
 └── dados/
     ├── ldr/       # 60 CSVs: 20 por condição
     └── hc_sr04/   # 30 CSVs: 10 por condição
@@ -51,25 +56,20 @@ https://www.youtube.com/watch?v=IoHceU1G-Fc
 ## Executar o protótipo local
 
 1. Instale o Arduino IDE e o suporte à placa ESP32 correspondente à placa usada.
-2. Instale a biblioteca de inferência Arduino exportada pelo Edge Impulse para este projeto. O sketch inclui `LuzViva_inferencing.h`; essa biblioteca/modelo não está versionada nesta pasta no momento.
-3. Abra `firmware/LuzViva_Carrinho/LuzViva_Carrinho.ino`, selecione a placa e a porta serial e grave o programa.
-4. Conecte o celular ou computador ao ponto de acesso Wi-Fi criado pelo ESP32 e abra `http://192.168.4.1`.
-5. Use o painel para observar classificação/confiança, leituras e distância, controlar o carrinho manualmente e alternar o modo automático.
-
-As credenciais do ponto de acesso estão definidas no sketch para a demonstração local. Antes de publicar o código, a equipe deve decidir se as mantém como credenciais públicas de demonstração ou as move para configuração local fora do Git.
+2. Instale o ZIP versionado em `model/biblioteca-edge-impulse/ei-luzviva-arduino-1.0.2-impulse-#1.zip` pelo menu **Sketch → Include Library → Add .ZIP Library…**. Confira o SHA-256 e as instruções em [model/biblioteca-edge-impulse/README.md](model/biblioteca-edge-impulse/README.md).
+3. Abra `firmware/LuzViva_Carrinho/LuzViva_Carrinho.ino`, selecione a placa ESP32-S3 e a porta serial e grave o programa.
+4. Conecte o celular ou computador à rede Wi-Fi local do carrinho (`ESP32_RC`, senha `esp32pass`) e abra `http://192.168.4.1` para acessar o painel.
+5. Observe a classificação e a confiança do LDR, o controle manual e a proteção do HC-SR04.
 
 ## Documentação
 
 - [Arquitetura e estado das integrações](docs/arquitetura.md)
 - [Hardware e ligações](docs/hardware.md)
-- [Dados, classes e limitações do modelo](docs/dados-e-modelo.md)
-- [Checklist e roteiro da entrega MakerLab](docs/entrega-makerlab.md)
-
-## Entrega MakerLab
-
-A entrega oficial é o link público do GitHub com o código e a documentação reproduzível, acompanhado de um vídeo de até 6 minutos demonstrando o problema CitizenTech, o sensor adicional, a integração com IA e o robô funcionando. Consulte [o checklist completo](docs/entrega-makerlab.md).
+- [Dados, classes e resultados do modelo](docs/dados-e-modelo.md)
+- [Bibliotecas Edge Impulse do LDR e do HC-SR04/CP2](model/biblioteca-edge-impulse/README.md)
+- [Biblioteca versionada do Edge Impulse](model/biblioteca-edge-impulse/README.md)
 
 ## Evidências do treinamento LDR
 
-- [Relatório com resultados e limitações](docs/evidencias-treinamento-ldr.md)
+- [Relatório com resultados do treinamento](docs/evidencias-treinamento-ldr.md)
 - [Registro JSON dos parâmetros e métricas](evidencias/treinamento_ldr.json)

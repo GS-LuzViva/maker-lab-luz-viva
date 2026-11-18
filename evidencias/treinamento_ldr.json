@@ -1,0 +1,39 @@
+{
+  "projeto": "LuzViva",
+  "edge_impulse_project_id": 1160482,
+  "impulse_id": 1,
+  "evidencias_capturadas_em": "2026-11-10",
+  "dataset": {
+    "amostras_total": 60,
+    "amostras_treino": 48,
+    "amostras_teste": 12,
+    "classes": ["apagada", "insuficiente", "ok"],
+    "amostras_teste_por_classe": 4
+  },
+  "configuracao_impulse": {
+    "eixo_de_entrada": "ldr_adc",
+    "features_de_entrada": 1,
+    "janela_ms": 1890,
+    "intervalo_ms": 100,
+    "transformacao": "Flatten",
+    "rede_densa_neuronios": [20, 10],
+    "ciclos_treinamento": 100,
+    "taxa_aprendizado": 0.01,
+    "processador_treinamento": "CPU"
+  },
+  "resultados_reportados_pelo_edge_impulse": {
+    "validacao_acuracia_pct": 100.0,
+    "validacao_loss": 0.05,
+    "teste_modelo": "Unoptimized (float32)",
+    "teste_corretos": 12,
+    "teste_total": 12,
+    "teste_acuracia_pct": 100.0,
+    "matriz_confusao_sem_erros_na_amostra": true
+  },
+  "capturas": [
+    "evidencias/ldr/Captura de Tela 2026-11-10 às 21.32.37.png",
+    "evidencias/ldr/Captura de Tela 2026-11-10 às 21.33.39.png",
+    "evidencias/ldr/Captura de Tela 2026-11-10 às 21.33.50.png",
+    "evidencias/ldr/Captura de Tela 2026-11-10 às 21.34.10.png"
+  ]
+}

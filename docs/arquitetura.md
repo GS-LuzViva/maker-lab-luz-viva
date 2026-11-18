@@ -9,7 +9,6 @@ Monitorar pontos de iluminação pública à noite e fornecer evidências para p
 ```mermaid
 flowchart LR
     LDR[LDR no robô] --> ESP[ESP32 + TinyML]
-    ESP -->|POST /api/medicoes — planejado| APP[API e site LuzViva]
     FOTO[Foto do cidadão] -->|POST /api/ocorrencias| APP
     FONTES[GeoSampa / ILUME, SP156, clima] --> DADOS[Airflow + Databricks]
     APP --> DADOS
@@ -26,15 +25,9 @@ flowchart LR
 - **LDR + TinyML:** o ESP32 amostra o ADC e chama `run_classifier`; o painel local mostra classe, confiança, ADC e mV.
 - **Painel local:** o sketch cria um ponto de acesso Wi-Fi e serve a interface em `http://192.168.4.1`.
 - **Controle manual:** comandos direcionais e parada são expostos por `/command`.
-- **Modo automático:** o HC-SR04 determina avanço e manobras de evasão. A classificação do LDR é exibida, mas não comanda os motores.
+- **Modo automático:** o sketch usa o HC-SR04 para proteção e evasão de obstáculos. A classificação TinyML do LDR é exibida no painel.
 - **Segurança frontal:** em manual, o avanço para diante é bloqueado se houver obstáculo detectado a 30 cm ou menos; no automático o robô para se o sensor não obtiver eco.
-- **Integração com o app público:** ainda não implementada no sketch. Não há `POST /api/medicoes` neste firmware.
-
-## Contrato de medição desejado
-
-O roteiro da equipe prevê enviar cada medição ao app com um contrato contendo, entre outros campos, `id_medicao`, `robo_id`, `data_hora`, `lux`, `situacao_robo`, `sensor` e `area_piloto`; coordenadas e placa podem identificar o ponto quando disponíveis. A rota acordada é `POST /api/medicoes`.
-
-O firmware atual ainda não produz todos esses campos: não converte ADC para lux, não tem GPS/placa configurados e não envia telemetria pela rede. A equipe deve completar esses itens em conjunto com quem mantém o app, preservando o contrato antes de alterar nomes ou tipos.
+- **Painel local:** o ESP32 cria um ponto de acesso e serve o painel de controle local em `http://192.168.4.1`.
 
 ## Integração com as demais disciplinas
 
